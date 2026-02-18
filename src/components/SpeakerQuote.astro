@@ -1,0 +1,32 @@
+---
+interface Props {
+  quote: string;
+  speakerName: string;
+  speakerTitle: string;
+  initials: string;
+  color?: string; // bg color for avatar: 'red' | 'blue' | 'yellow' | 'black'
+}
+
+const { quote, speakerName, speakerTitle, initials, color = 'red' } = Astro.props;
+
+const colorMap: Record<string, string> = {
+  red: 'bg-[#E31C25]',
+  blue: 'bg-[#006AB4]',
+  yellow: 'bg-[#FFC906] text-black',
+  black: 'bg-[#1a1a1a]',
+};
+const avatarClass = colorMap[color] || colorMap.red;
+---
+
+<div class="blockquote-speaker">
+    <blockquote>
+        &ldquo;{quote}&rdquo;
+    </blockquote>
+    <div class="speaker-info">
+        <div class={`speaker-avatar ${avatarClass}`}>{initials}</div>
+        <div>
+            <p class="font-black text-sm">{speakerName}</p>
+            <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400">{speakerTitle}</p>
+        </div>
+    </div>
+</div>

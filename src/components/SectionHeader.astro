@@ -1,0 +1,12 @@
+---
+interface Props {
+  number: string; // '01', '02', etc.
+  title: string;
+}
+
+const { number, title } = Astro.props;
+---
+
+<h2 class="text-3xl brand-font uppercase mb-8 flex items-center">
+    <span class="bg-black text-white px-3 py-1 mr-4 leading-none text-lg">{number}</span> {title}
+</h2>

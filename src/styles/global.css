@@ -1,0 +1,294 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== BRAND VARIABLES ===== */
+:root {
+    --brand-red: #E31C25;
+    --brand-blue: #006AB4;
+    --brand-yellow: #FFC906;
+    --brand-black: #1a1a1a;
+    --brand-offwhite: #faf9f6;
+}
+
+body {
+    font-family: 'Public Sans', sans-serif;
+    background-color: var(--brand-offwhite);
+}
+
+h1, h2, h3, h4, .brand-font {
+    font-family: 'Alfa Slab One', serif;
+}
+
+.slab-text {
+    font-family: 'Zilla Slab', serif;
+}
+
+::selection {
+    background-color: var(--brand-yellow);
+    color: black;
+}
+
+/* ===== BRUTALIST SHADOWS ===== */
+.brutalist-shadow {
+    box-shadow: 6px 6px 0px 0px var(--brand-black);
+}
+
+.brutalist-shadow-hover {
+    box-shadow: 6px 6px 0px 0px var(--brand-black);
+    transition: all 0.2s ease;
+}
+.brutalist-shadow-hover:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 10px 10px 0px 0px var(--brand-black);
+}
+
+.brutalist-shadow-static {
+    box-shadow: 6px 6px 0px 0px var(--brand-black);
+}
+
+.brutalist-card-shadow {
+    box-shadow: 8px 8px 0px 0px var(--brand-black);
+}
+
+/* ===== SCROLL PROGRESS BAR ===== */
+.progress-bar {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    height: 4px;
+    background: var(--brand-red);
+    z-index: 40;
+    transition: width 0.1s;
+}
+
+/* ===== ARTICLE PROSE ===== */
+.article-prose p {
+    font-family: 'Zilla Slab', serif;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #374151;
+}
+
+.article-prose ul {
+    list-style: none;
+    padding-left: 0;
+}
+.article-prose ul li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-family: 'Zilla Slab', serif;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #374151;
+}
+.article-prose ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--brand-red);
+}
+
+.article-prose ol {
+    list-style: none;
+    padding-left: 0;
+    counter-reset: article-ol;
+}
+.article-prose ol li {
+    counter-increment: article-ol;
+    position: relative;
+    padding-left: 2.25rem;
+    margin-bottom: 0.75rem;
+    font-family: 'Zilla Slab', serif;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #374151;
+}
+.article-prose ol li::before {
+    content: counter(article-ol);
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+    background: var(--brand-black);
+    color: var(--brand-yellow);
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 900;
+    font-size: 0.7rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== IMAGE FIGURES ===== */
+.article-figure {
+    border: 4px solid var(--brand-black);
+    background: white;
+}
+.article-figure img {
+    width: 100%;
+    display: block;
+}
+.article-figure figcaption {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1rem;
+    border-top: 2px solid var(--brand-black);
+    color: #6b7280;
+}
+
+/* ===== CALLOUT BOXES ===== */
+.callout-acme {
+    border-left: 6px solid var(--brand-red);
+    background: white;
+    border-top: 2px solid var(--brand-black);
+    border-right: 2px solid var(--brand-black);
+    border-bottom: 2px solid var(--brand-black);
+}
+
+/* ===== STICKY TOC ===== */
+.sticky-toc {
+    position: sticky;
+    top: 100px;
+}
+
+.toc-link.active {
+    color: var(--brand-red);
+    border-left-color: var(--brand-red);
+}
+
+/* ===== BRUTALIST DATA TABLES ===== */
+.brutalist-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid var(--brand-black);
+    font-family: 'Public Sans', sans-serif;
+}
+.brutalist-table thead th {
+    background: var(--brand-black);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 3px solid var(--brand-black);
+}
+.brutalist-table tbody td {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+}
+.brutalist-table tbody tr:nth-child(even) {
+    background: #f3f4f6;
+}
+.brutalist-table tbody tr:hover {
+    background: #fef3c7;
+}
+.table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ===== BLOCKQUOTE WITH SPEAKER ===== */
+.blockquote-speaker {
+    background: var(--brand-black);
+    border: 4px solid var(--brand-black);
+    color: white;
+    padding: 1.5rem 2rem;
+}
+.blockquote-speaker blockquote {
+    font-family: 'Zilla Slab', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+.blockquote-speaker .speaker-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.blockquote-speaker .speaker-avatar {
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 2px solid rgba(255,255,255,0.3);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 0.65rem;
+    color: white;
+}
+
+/* ===== REFERENCE LIST ===== */
+.reference-list {
+    counter-reset: ref-counter;
+    list-style: none;
+    padding: 0;
+}
+.reference-list li {
+    counter-increment: ref-counter;
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+.reference-list li::before {
+    content: counter(ref-counter);
+    background: var(--brand-black);
+    color: white;
+    font-weight: 900;
+    font-size: 0.65rem;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+/* ===== HERO IMAGE ===== */
+.hero-image {
+    border: 4px solid rgba(255,255,255,0.2);
+}
+
+/* ===== SEARCH INPUT ===== */
+.search-input:focus {
+    outline: none;
+    box-shadow: 6px 6px 0px 0px var(--brand-blue);
+}
+
+/* ===== FILTER BUTTONS ===== */
+.filter-btn.active {
+    background-color: var(--brand-black);
+    color: var(--brand-yellow);
+}
+.theme-btn.active {
+    background-color: var(--brand-blue);
+    color: white;
+}
+
+/* ===== MARGIN NOTES ===== */
+@media (min-width: 1280px) {
+    .margin-note {
+        position: absolute;
+        right: -280px;
+        width: 240px;
+        font-size: 0.8rem;
+    }
+}

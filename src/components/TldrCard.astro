@@ -1,0 +1,29 @@
+---
+interface TakeawayItem {
+  label: string;
+  text: string;
+}
+
+interface Props {
+  items: TakeawayItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="bg-[#FFC906] border-4 border-black p-6 md:p-8 brutalist-card-shadow">
+    <h2 class="text-xl brand-font uppercase mb-5 flex items-center">
+        <i class="ph-bold ph-lightning text-xl mr-2"></i> TL;DR &mdash; Key Takeaways
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {items.map((item, i) => (
+            <div class="flex items-start gap-3">
+                <span class="bg-black text-[#FFC906] font-black text-xs w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">{i + 1}</span>
+                <div>
+                    <p class="font-bold text-xs uppercase tracking-wide mb-1">{item.label}</p>
+                    <p class="slab-text text-sm leading-relaxed">{item.text}</p>
+                </div>
+            </div>
+        ))}
+    </div>
+</div>

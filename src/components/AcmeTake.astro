@@ -1,0 +1,23 @@
+---
+interface Props {
+  color?: string; // 'red' | 'blue' | 'black'
+}
+
+const { color = 'red' } = Astro.props;
+
+const colorMap: Record<string, string> = {
+  red: 'text-[#E31C25]',
+  blue: 'text-[#006AB4]',
+  black: 'text-gray-800',
+};
+const textColor = colorMap[color] || colorMap.red;
+---
+
+<div class="callout-acme p-5">
+    <span class={`font-black text-xs uppercase tracking-wider ${textColor} block mb-2`}>
+        <i class="ph-bold ph-crosshair mr-1"></i> ACME Practitioner Take
+    </span>
+    <p class="slab-text text-base leading-relaxed text-gray-700">
+        <slot />
+    </p>
+</div>

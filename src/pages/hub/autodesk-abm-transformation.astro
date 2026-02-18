@@ -1,0 +1,536 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProgressBar from '../../components/ProgressBar.astro';
+import SpeakerQuote from '../../components/SpeakerQuote.astro';
+import DataTable from '../../components/DataTable.astro';
+import AcmeTake from '../../components/AcmeTake.astro';
+import ArticleFigure from '../../components/ArticleFigure.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import TldrCard from '../../components/TldrCard.astro';
+import RelatedReads from '../../components/RelatedReads.astro';
+import '../../styles/global.css';
+---
+
+<BaseLayout title="How Autodesk Transformed Its Business with ABM">
+
+    <!-- Reading progress bar -->
+    <ProgressBar />
+
+
+    <!-- ===== FULL-WIDTH HERO HEADER ===== -->
+    <header class="pt-28 pb-0 px-4 max-w-7xl mx-auto">
+        <a href="/" class="inline-flex items-center font-black uppercase tracking-widest text-sm hover:text-[#E31C25] mb-6 transition-colors">
+            <i class="ph-bold ph-arrow-left mr-2"></i> Back to Hub
+        </a>
+
+        <div class="bg-[#1a1a1a] border-4 border-black p-8 md:p-12 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-[#E31C25] opacity-5 rotate-45 translate-x-20 -translate-y-20"></div>
+
+            <div class="relative z-10">
+                <!-- Meta badges -->
+                <div class="flex flex-wrap items-center gap-2 mb-5">
+                    <span class="bg-[#006AB4] text-white px-3 py-1 text-xs font-black uppercase tracking-widest border-2 border-white/20 inline-flex items-center gap-1">
+                        <i class="ph-fill ph-article"></i> Case Study
+                    </span>
+                    <span class="bg-white/10 text-white px-3 py-1 text-xs font-black uppercase tracking-widest border-2 border-white/20 inline-flex items-center gap-1">
+                        <i class="ph-bold ph-clock"></i> 18 min read
+                    </span>
+                    <span class="bg-white/10 text-white px-3 py-1 text-xs font-black uppercase tracking-widest border-2 border-white/20">
+                        July 31, 2024
+                    </span>
+                </div>
+
+                <!-- Title -->
+                <h1 class="text-4xl md:text-5xl lg:text-6xl brand-font text-white uppercase tracking-tighter leading-[0.9] mb-4 max-w-4xl">
+                    How Autodesk Transformed Its Business with <span class="text-[#FFC906]">Account-Based Marketing</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="slab-text text-lg text-gray-300 leading-relaxed mb-5 max-w-3xl">
+                    From a traditional licensing model to a $5.3B subscription powerhouse. How ABSM, personalized microsites, and relentless sales alignment drove 150% revenue growth.
+                </p>
+
+                <!-- Tags -->
+                <div class="flex flex-wrap gap-2 mb-5">
+                    <span class="text-[10px] font-black uppercase border border-white/30 text-white/70 px-2 py-0.5">ABM</span>
+                    <span class="text-[10px] font-black uppercase border border-white/30 text-white/70 px-2 py-0.5">Sales Alignment</span>
+                    <span class="text-[10px] font-black uppercase border border-white/30 text-white/70 px-2 py-0.5">Personalization</span>
+                    <span class="text-[10px] font-black uppercase border border-white/30 text-white/70 px-2 py-0.5">Enterprise GTM</span>
+                </div>
+
+                <!-- Best for -->
+                <div class="flex flex-wrap items-center gap-2 mb-8">
+                    <span class="font-black text-[10px] uppercase tracking-widest text-gray-500">Best for:</span>
+                    <span class="border border-white/20 text-white/80 px-3 py-1 font-black uppercase text-[10px] tracking-wide inline-flex items-center gap-1"><i class="ph-bold ph-target text-[#006AB4] text-xs"></i> ABM Leaders</span>
+                    <span class="border border-white/20 text-white/80 px-3 py-1 font-black uppercase text-[10px] tracking-wide inline-flex items-center gap-1"><i class="ph-bold ph-chart-line-up text-[#E31C25] text-xs"></i> Growth Marketers</span>
+                    <span class="border border-white/20 text-white/80 px-3 py-1 font-black uppercase text-[10px] tracking-wide inline-flex items-center gap-1"><i class="ph-bold ph-rocket-launch text-[#FFC906] text-xs"></i> Founders</span>
+                    <span class="border border-white/20 text-white/80 px-3 py-1 font-black uppercase text-[10px] tracking-wide inline-flex items-center gap-1"><i class="ph-bold ph-handshake text-white text-xs"></i> Sales Leaders</span>
+                </div>
+
+                <!-- Hero Image -->
+                <div class="hero-image bg-black">
+                    <img src="https://placehold.co/1200x500/1a1a1a/FFC906?text=Autodesk+ABM+Transformation+%E2%80%94+Hero+Visual" alt="Autodesk ABM Transformation" class="w-full block">
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ===== CONTENT AREA: TOC Sidebar + Article ===== -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
+        <div class="grid grid-cols-12 gap-8 lg:gap-12">
+
+            <!-- ===== LEFT: Sticky TOC + Meta ===== -->
+            <aside class="hidden lg:block col-span-3">
+                <div class="sticky-toc space-y-6">
+
+                    <!-- On This Page -->
+                    <div>
+                        <h3 class="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-3">On This Page</h3>
+                        <ul class="space-y-1">
+                            <li><a href="#tldr" class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">Key Takeaways</a></li>
+                            <li><a href="#new-era" class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">A New Era</a></li>
+                            <li><a href="#abm-imperative" class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">The ABM Imperative</a></li>
+                            <li><a href="#sales-alignment" class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">Sales Alignment</a></li>
+                            <li><a href="#pilot" class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">The '18 Pilot</a></li>
+                            <li><a href="#what-worked" class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">What Worked</a></li>
+                            <li><a href="#outcomes" class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">Outcomes</a></li>
+                            <li><a href="#quotes" class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">Key Quotes</a></li>
+                            <li><a href="#references" class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">References</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="border-t-2 border-gray-200 pt-6">
+                        <!-- Subject -->
+                        <h3 class="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-2">Subject</h3>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 bg-[#006AB4] border-2 border-black overflow-hidden flex-shrink-0">
+                                <img src="https://api.dicebear.com/7.x/identicon/svg?seed=Autodesk" alt="Autodesk" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-black text-sm leading-tight">Autodesk</h4>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase">Design & Make Platform</p>
+                            </div>
+                        </div>
+                        <p class="slab-text text-xs text-gray-400 italic">$5.3B revenue. 12M+ users. Pioneer in design, engineering, and entertainment software.</p>
+                    </div>
+
+                    <div class="border-t-2 border-gray-200 pt-6">
+                        <!-- Key People -->
+                        <h3 class="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-2">Featuring</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-7 h-7 bg-gray-200 border-2 border-black overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                    <span class="font-black text-[8px]">NM</span>
+                                </div>
+                                <div>
+                                    <p class="font-black text-xs leading-tight">Nathalie N. Moore</p>
+                                    <p class="text-[9px] text-gray-400">AEC ABM Manager</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-7 h-7 bg-gray-200 border-2 border-black overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                    <span class="font-black text-[8px]">CW</span>
+                                </div>
+                                <div>
+                                    <p class="font-black text-xs leading-tight">Christian Weiss</p>
+                                    <p class="text-[9px] text-gray-400">Director of ABM CE</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-7 h-7 bg-gray-200 border-2 border-black overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                    <span class="font-black text-[8px]">SL</span>
+                                </div>
+                                <div>
+                                    <p class="font-black text-xs leading-tight">Stephanie Losee</p>
+                                    <p class="text-[9px] text-gray-400">Dir. Executive & ABM Content</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t-2 border-gray-200 pt-6">
+                        <!-- Curated By -->
+                        <h3 class="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-2">Curated By</h3>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 bg-[#E31C25] border-2 border-black overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                <span class="text-white font-black text-sm">HK</span>
+                            </div>
+                            <div>
+                                <h4 class="font-black text-sm leading-tight">Hari Krishnan</h4>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase">ACME, Founder</p>
+                            </div>
+                        </div>
+                        <p class="slab-text text-xs text-gray-400 italic">Practitioner-filtered. Every insight validated against real GTM execution.</p>
+                    </div>
+
+                    <div class="border-t-2 border-gray-200 pt-6">
+                        <!-- Actions -->
+                        <button class="w-full bg-[#1a1a1a] text-white border-2 border-black p-3 font-black uppercase text-[10px] tracking-widest hover:bg-[#E31C25] transition-colors flex items-center justify-center gap-2 mb-2">
+                            <i class="ph-bold ph-bookmark-simple"></i> Save to Reading List
+                        </button>
+                        <button class="w-full bg-white text-black border-2 border-black p-3 font-black uppercase text-[10px] tracking-widest hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
+                            <i class="ph-bold ph-share-network"></i> Share
+                        </button>
+                    </div>
+
+                </div>
+            </aside>
+
+
+            <!-- ===== RIGHT: Main Article Content ===== -->
+            <main class="col-span-12 lg:col-span-9">
+
+                <!-- TL;DR -->
+                <section class="mb-14" id="tldr">
+                    <TldrCard items={[
+                        { label: "Core Thesis", text: "Autodesk's subscription pivot required a fundamental shift from product-push to account-centric engagement. ABM became the operating system for that shift." },
+                        { label: "Key Insight", text: "Naming it \"ABSM\" (Account-Based Sales and Marketing) was a deliberate move. Joint KPIs with sales and 1:1 \"account therapy\" sessions made alignment real, not aspirational." },
+                        { label: "Practitioner Takeaway", text: "Personalized microsites via Folloze scaled ABM to 10,000 global accounts within a year. Digital + physical direct mail made it memorable." },
+                        { label: "Contrarian View", text: "Revenue grew from $2.1B to $5.3B (FY18-FY24), but isolating ABM's contribution from the broader subscription shift remains impossible to prove." }
+                    ]} />
+                </section>
+
+
+                <!-- ===== SECTION 01: A New Era ===== -->
+                <section class="mb-14" id="new-era">
+                    <SectionHeader number="01" title="A New Era Under Anagnost" />
+
+                    <article class="article-prose space-y-6">
+                        <p>
+                            In 2018, Autodesk, the San Francisco stalwart known for its design, engineering, and entertainment software, faced a choice. The company, transitioning from a traditional sales model to a subscription-based business, needed a new strategy to effectively engage and retain high-value customers.
+                        </p>
+
+                        <p>
+                            In 2017, Autodesk elevated acting interim co-CEO and CMO <strong>Andrew Anagnost</strong> to the new role of President and CEO to drive the next phase of growth. With over 25 years at the company, Anagnost championed three strategic initiatives:
+                        </p>
+
+                        <ol>
+                            <li>Completing transition to a subscription business model</li>
+                            <li>Digitizing the company</li>
+                            <li>Reimagining construction, manufacturing, and production</li>
+                        </ol>
+
+                        <!-- Inline Quote -->
+                        <SpeakerQuote
+                            quote="Our long tail of customers, our small customers, need different things than our biggest customers. How do you balance delighting current customers while providing next-gen, disruptive cloud-native solutions?"
+                            speakerName="Andrew Anagnost"
+                            speakerTitle="CEO, Autodesk"
+                            initials="AA"
+                            color="blue"
+                        />
+
+                        <p>
+                            This balancing act between customer delight and disruption becomes even more significant when you realize that Autodesk had 12+ million legacy users and only 4 million of them were paying customers.
+                        </p>
+                    </article>
+                </section>
+
+
+                <!-- ===== SECTION 02: The ABM Imperative ===== -->
+                <section class="mb-14" id="abm-imperative">
+                    <SectionHeader number="02" title="The ABM Imperative" />
+
+                    <article class="article-prose space-y-6">
+                        <p>
+                            While there were many levers to lead the transformation, an internal motion was set up to focus on account-based marketing. Why? The subscription shift demanded it:
+                        </p>
+
+                        <ul>
+                            <li><strong>For the Customer, Of the Customer:</strong> Success now depended on how end-users actually used the product, necessitating long-term relationships.</li>
+                            <li><strong>Cushion with Education:</strong> The subscription shift required tailored redress of customer anxieties through personalised education.</li>
+                            <li><strong>Great Expectations:</strong> Annual subscriptions created heightened expectations for frequent upgrades and support.</li>
+                            <li><strong>Plug the Leak:</strong> With continuous churn risk, focusing on the 80-20 rule became essential. 20% of customers drove 80% of revenue.</li>
+                        </ul>
+
+                        <AcmeTake>
+                            The subscription model is what forces the ABM motion, not the other way around. If your revenue model shifts from one-time to recurring, your marketing model <em>must</em> shift from lead-centric to account-centric. This isn't optional.
+                        </AcmeTake>
+                    </article>
+                </section>
+
+
+                <!-- ===== SECTION 03: Aligning with Sales ===== -->
+                <section class="mb-14" id="sales-alignment">
+                    <SectionHeader number="03" title="Aligning with Sales" />
+
+                    <article class="article-prose space-y-6">
+
+                        <!-- Sub-section -->
+                        <h3 class="text-xl brand-font uppercase text-[#006AB4]">AB'S'M: Another Bull-Shit Marketing?</h3>
+
+                        <p>
+                            Care was taken to portray unified execution even in naming: ABM was not just ABM, but AB'S'M &mdash; Account-Based Sales and Marketing. Sales and marketing were no longer operating in silos.
+                        </p>
+
+                        <SpeakerQuote
+                            quote="This is ABSM, and we are now in the same boat, winning together."
+                            speakerName="Christian Weiss"
+                            speakerTitle="Director of ABM CE, Autodesk"
+                            initials="CW"
+                            color="red"
+                        />
+
+                        <p>
+                            The response from the European mid-market sales team was skeptical. The sales leader bluntly asked: "ABSM? What does that mean? Another Bull-Shit in Marketing?" This skepticism highlighted the need for joint efforts and shared accountability.
+                        </p>
+
+                        <!-- Sub-section -->
+                        <h3 class="text-xl brand-font uppercase text-[#E31C25]">Skin-in-the-Game: Joint KPIs</h3>
+
+                        <p>
+                            To build trust, the ABSM team carried a number on them, just like their sales counterparts. Shared KPIs included:
+                        </p>
+
+                        <!-- Data Table -->
+                        <DataTable
+                            headers={["KPI Category", "Metrics"]}
+                            rows={[
+                                ["Revenue", "Annual Contract Value, Subscriber goals (cloud + product licenses)"],
+                                ["Account Health", "% Account Lift, Seat Expansion, Content Interactions, # of Demos"],
+                                ["Deal Velocity", "Avg. deal size, % product mix, # net new contacts, # net new opportunities"],
+                                ["Retention", "# of conversions, # of renewals, advocacy score"]
+                            ]}
+                        />
+
+                        <!-- Sub-section -->
+                        <h3 class="text-xl brand-font uppercase text-black">Account Therapy</h3>
+
+                        <p>
+                            The ABM team set up regular "1:1 account therapy" sessions with sales reps &mdash; designed to drive tight alignment and collaboration.
+                        </p>
+
+                        <SpeakerQuote
+                            quote="We call it account therapy because sales already has a pipeline review. You don't want to intimidate them. Instead, it's 'come and vent to me as your marketer what your challenges are and I'll come up with ideas for you.'"
+                            speakerName="Nathalie N. Moore"
+                            speakerTitle="AEC ABM Manager, Autodesk"
+                            initials="NM"
+                            color="yellow"
+                        />
+
+                        <AcmeTake>
+                            "Account therapy" is genius framing. Rebranding alignment meetings removes the sales team's guard. If your ABM program feels like a reporting exercise for sales, rename it. The psychology of naming matters.
+                        </AcmeTake>
+                    </article>
+                </section>
+
+
+                <!-- ===== SECTION 04: The '18 Pilot ===== -->
+                <section class="mb-14" id="pilot">
+                    <SectionHeader number="04" title="The '18 ABSM Pilot" />
+
+                    <article class="article-prose space-y-6">
+                        <p>
+                            The ABSM program set clear goals for its first rollout: grow business in mid-market and named accounts, establish and measure an effective ABM approach, maximize contribution to sales pipeline, and get a quick win.
+                        </p>
+
+                        <ArticleFigure
+                            src="https://placehold.co/900x500/faf9f6/1a1a1a?text=Autodesk+MarTech+Stack+%E2%80%94+CRM+%2B+Automation+%2B+Orchestration"
+                            alt="Autodesk MarTech Stack"
+                            caption="The pilot marketing technology stack at Autodesk: CRM, marketing automation, account data & insights, personalized interactions, orchestration, and measurement tools."
+                            icon="ph-bold ph-stack"
+                        />
+
+                        <DataTable
+                            headers={["Pilot Element", "Detail"]}
+                            rows={[
+                                ["Total Accounts", "7,705 accounts across US, Europe, Middle East, and Asia Pacific"],
+                                ["Team Size", "3 global teams, 49 ABM managers and marketers"],
+                                ["Verticals", "AEC (Architecture, Engineering, Construction), D&M (Design & Manufacturing), M&E (Media & Entertainment)"],
+                                ["Focus", "Named accounts + mid-market + ENR400 companies"]
+                            ]}
+                        />
+                    </article>
+                </section>
+
+
+                <!-- ===== SECTION 05: What Really Worked ===== -->
+                <section class="mb-14" id="what-worked">
+                    <SectionHeader number="05" title="What Really Worked" />
+
+                    <article class="article-prose space-y-6">
+
+                        <h3 class="text-xl brand-font uppercase text-[#006AB4]">Going Beyond "Hi &lt;First_Name&gt;"</h3>
+
+                        <p>
+                            Autodesk recognized early the power of personalization in their one-to-few and one-to-many approaches. Using <strong>Folloze</strong>, they built microsites and content hubs tailored to each account, scaling the ABM program to 10,000 global accounts within a year.
+                        </p>
+
+                        <ArticleFigure
+                            src="https://placehold.co/900x450/006AB4/ffffff?text=Example+ABM+Microsite+Built+Using+Folloze"
+                            alt="ABM microsite example"
+                            caption="An example of an ABM microsite built using Folloze. Co-branded, with dedicated points of contact and tailored content for each account."
+                            icon="ph-bold ph-browser"
+                        />
+
+                        <h3 class="text-xl brand-font uppercase text-[#E31C25]">Digital + Physical = Experiences Remarkable</h3>
+
+                        <p>
+                            Autodesk created a campaign targeting six stakeholders from the buying committee: three received miniature vaults, three received codes to open them. Once they found each other, they unlocked access to a personalised microsite. The messaging? "Chasing people around for the latest design copy takes time. Here is the better way to do it!"
+                        </p>
+
+                        <ArticleFigure
+                            src="https://placehold.co/900x400/FFC906/1a1a1a?text=Direct+Mail+Campaign+%E2%80%94+Vault+%2B+Code+%2B+Microsite"
+                            alt="Direct mail campaign driving to Folloze board"
+                            caption="Scalable personalization: direct mail campaign with miniature vaults driving to personalized Folloze boards."
+                            icon="ph-bold ph-package"
+                        />
+
+                        <h3 class="text-xl brand-font uppercase text-black">Curated Content for Executive Eyes</h3>
+
+                        <p>
+                            The award-winning ABM content team created their own publishing platform, <strong>'Converge'</strong> (later rebranded as 'Design & Make'), to publish executive-level content. The strategy was three-pronged: always-on, executive-level, and regionally tailored.
+                        </p>
+
+                        <SpeakerQuote
+                            quote="If you carry on using the same 'inside-out' content that you've been using for lead generation, then chances are your ABM program will not see the results you're looking for."
+                            speakerName="Stephanie Losee"
+                            speakerTitle="Dir. Executive & ABM Content, Autodesk"
+                            initials="SL"
+                            color="blue"
+                        />
+
+                        <!-- Content Campaign Results Table -->
+                        <DataTable
+                            headers={["Metric", "Result"]}
+                            rows={[
+                                ["Executives Engaged", "1,570"],
+                                ["Opt-Ins for Future Content", "171"],
+                                ["Report Downloads vs Target", "Exceeded by 62%"],
+                                ["Workshop Attendees vs Target", "Exceeded by 20%"],
+                                ["Took Inspiration for Business", "56% of workshop attendees"]
+                            ]}
+                        />
+
+                        <AcmeTake color="blue">
+                            Building your own content platform (like Converge) is a power move. It positions you as a publisher, not a vendor. If you're running executive ABM, your content can't live on a gated landing page. Give it a home that feels editorial.
+                        </AcmeTake>
+                    </article>
+                </section>
+
+
+                <!-- ===== SECTION 06: Outcomes ===== -->
+                <section class="mb-14" id="outcomes">
+                    <SectionHeader number="06" title="Outcomes & What's Next" />
+
+                    <article class="article-prose space-y-6">
+                        <p>
+                            Autodesk's revenue grew from <strong>$2.1 billion in FY18 to $5.34 billion in FY24</strong>, an increase of 150 percent. EBITDA went from a negative $401 million to a positive $1.46 billion. Market cap doubled in just four years, recovering to $48 billion by end of Q2 FY23.
+                        </p>
+
+                        <ArticleFigure
+                            src="https://placehold.co/900x450/1a1a1a/E31C25?text=Autodesk+Revenue+%242.1B+%E2%86%92+%245.3B+%28FY18%E2%80%93FY24%29"
+                            alt="Autodesk revenue growth chart"
+                            caption="Revenue history for Autodesk from FY18 to FY24: 150% growth driven by subscription transition and account-based GTM."
+                            icon="ph-bold ph-chart-line-up"
+                        />
+
+                        <h3 class="text-xl brand-font uppercase text-[#006AB4]">What's Next</h3>
+
+                        <ul>
+                            <li><strong>AI Integration:</strong> Internally developing Autodesk GPT for consistency, relevancy and accuracy in customer data output.</li>
+                            <li><strong>AI-powered Customer Queries:</strong> Implementing AI systems to handle common queries, freeing sales for complex interactions.</li>
+                            <li><strong>Scalability:</strong> Balancing one-to-one, one-to-few, and one-to-many ABM approaches for personalized experiences at scale.</li>
+                            <li><strong>Process Standardization:</strong> Defining processes for greater sales alignment and deploying across the organization.</li>
+                        </ul>
+
+                        <AcmeTake color="black">
+                            Autodesk's journey proves that ABM isn't a campaign &mdash; it's an operating model. The companies that treat ABM as a program with an end date will plateau. The ones that embed it into how sales and marketing operate together will compound.
+                        </AcmeTake>
+                    </article>
+                </section>
+
+
+                <!-- ===== KEY QUOTES ===== -->
+                <section class="mb-14" id="quotes">
+                    <SectionHeader number="07" title="Key Quotes" />
+                    <div class="space-y-4">
+                        <div class="bg-[#1a1a1a] text-white p-5 border-4 border-black">
+                            <p class="slab-text italic text-base leading-relaxed mb-3">
+                                "He made this announcement not only internally at Autodesk, but also to our shareholders, on our financial earnings call, to Wall Street and to our board of directors. We had a lot of eyes on our program, and the pressure was on."
+                            </p>
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 bg-[#FFC906] text-black flex items-center justify-center font-black text-[8px] flex-shrink-0">NM</div>
+                                <p class="text-xs font-bold text-gray-400 uppercase">Nathalie N. Moore &mdash; AEC ABM Manager, Autodesk</p>
+                            </div>
+                        </div>
+                        <div class="bg-[#1a1a1a] text-white p-5 border-4 border-black">
+                            <p class="slab-text italic text-base leading-relaxed mb-3">
+                                "We talk a lot about content that is hyper-relevant and 'outside-in,' i.e. it's based on customer insight and talks about them not at them."
+                            </p>
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 bg-[#006AB4] flex items-center justify-center font-black text-[8px] flex-shrink-0">SL</div>
+                                <p class="text-xs font-bold text-gray-400 uppercase">Stephanie Losee &mdash; Dir. Executive & ABM Content, Autodesk</p>
+                            </div>
+                        </div>
+                        <div class="bg-[#1a1a1a] text-white p-5 border-4 border-black">
+                            <p class="slab-text italic text-base leading-relaxed mb-3">
+                                "This is ABSM, and we are now in the same boat, winning together."
+                            </p>
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 bg-[#E31C25] flex items-center justify-center font-black text-[8px] flex-shrink-0">CW</div>
+                                <p class="text-xs font-bold text-gray-400 uppercase">Christian Weiss &mdash; Director of ABM CE, Autodesk</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- ===== REFERENCES ===== -->
+                <section class="mb-14" id="references">
+                    <SectionHeader number="08" title="References" />
+                    <div class="bg-white border-4 border-black p-6">
+                        <ol class="reference-list">
+                            <li><span class="slab-text text-gray-600">"Autodesk in 2018: A Focused Future," GSB No. SM-310.</span></li>
+                            <li><span class="slab-text text-gray-600">"Autodesk 2022: A Future Delivered?" GSB No. SM-360.</span></li>
+                            <li><span class="slab-text text-gray-600">Formula One ABM | Christian Weiss | Let's Talk ABM Podcast.</span></li>
+                            <li><span class="slab-text text-gray-600">How to Measure the Success of Your ABM Program | Christian Weiss.</span></li>
+                            <li><span class="slab-text text-gray-600">Best Content Team: Autodesk 2021 &mdash; Content Marketing Association.</span></li>
+                            <li><span class="slab-text text-gray-600">Supercharge 2024 Growth: Evolution of an ABM Program | Christian Weiss | Guy Philips.</span></li>
+                            <li><span class="slab-text text-gray-600">Folloze &mdash; Autodesk: Scaled its ABM program for 10,000 global accounts in 365 days.</span></li>
+                            <li><span class="slab-text text-gray-600">Account-Based Sales-Marketing At Autodesk &mdash; Nathalie Moore | B2BMX 2019.</span></li>
+                            <li><span class="slab-text text-gray-600">Event Marketers Live | Jessie Wu.</span></li>
+                            <li><span class="slab-text text-gray-600">Autodesk revenue trends &mdash; public financial data.</span></li>
+                        </ol>
+                    </div>
+                </section>
+
+
+                <!-- ===== RELATED READS ===== -->
+                <section class="mb-14" id="related">
+                    <h2 class="text-3xl brand-font uppercase mb-8 flex items-center">
+                        Related Reads
+                    </h2>
+                    <RelatedReads items={[
+                        { href: "#", type: "Case Study", title: "Engineering Relationships: How Kyndryl Reinvents Growth", color: "blue" },
+                        { href: "#", type: "Podcast", title: "Diary of a CEO: Mark Ritson on Brand Strategy", color: "red" },
+                        { href: "#", type: "ACME Playbook", title: "ABM Program Launch: 90-Day Blueprint", color: "black" }
+                    ]} />
+                </section>
+
+
+                <!-- ===== PREV / NEXT NAV ===== -->
+                <section class="mb-12">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <a href="#" class="bg-white border-4 border-black p-5 hover:bg-gray-50 transition-colors group flex items-center gap-4">
+                            <i class="ph-bold ph-arrow-left text-xl text-gray-400 group-hover:text-[#E31C25] transition-colors"></i>
+                            <div>
+                                <span class="font-black text-[10px] uppercase tracking-widest text-gray-400">Previous</span>
+                                <p class="font-bold uppercase text-sm leading-tight">Diary of a CEO: Mark Ritson</p>
+                            </div>
+                        </a>
+                        <a href="#" class="bg-white border-4 border-black p-5 hover:bg-gray-50 transition-colors group flex items-center gap-4 text-right md:justify-end">
+                            <div>
+                                <span class="font-black text-[10px] uppercase tracking-widest text-gray-400">Next</span>
+                                <p class="font-bold uppercase text-sm leading-tight">Engineering Relationships: Kyndryl</p>
+                            </div>
+                            <i class="ph-bold ph-arrow-right text-xl text-gray-400 group-hover:text-[#E31C25] transition-colors"></i>
+                        </a>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+</BaseLayout>

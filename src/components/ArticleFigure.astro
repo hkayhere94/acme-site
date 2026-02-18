@@ -1,0 +1,17 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  caption: string;
+  icon?: string; // phosphor icon name e.g. 'ph-bold ph-image'
+}
+
+const { src, alt, caption, icon = 'ph-bold ph-image' } = Astro.props;
+---
+
+<figure class="article-figure brutalist-card-shadow">
+    <img src={src} alt={alt}>
+    <figcaption>
+        <i class={`${icon} mr-1`}></i> {caption}
+    </figcaption>
+</figure>

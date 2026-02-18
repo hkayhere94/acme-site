@@ -1,0 +1,64 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'High-signal takeaways from podcasts, YouTube, and books — filtered through practitioner reality.' } = Astro.props;
+---
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content={description}>
+    <title>{title} | ACME</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Public+Sans:wght@400;700;900&family=Zilla+Slab:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web" is:inline></script>
+</head>
+<body class="text-gray-900">
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="fixed w-full z-50 bg-[#faf9f6] border-b-4 border-black top-0 left-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <a href="/" class="text-4xl brand-font text-[#E31C25] tracking-tighter leading-none">ACME</a>
+                    <span class="hidden md:block text-[10px] brand-font uppercase text-[#006AB4] leading-tight tracking-normal">All Cool<br>Marketing<br>Experiments</span>
+                </div>
+                <div class="hidden lg:flex space-x-6 items-center">
+                    <a href="/" class="text-base font-bold text-gray-900 hover:text-[#006AB4] uppercase">Hub</a>
+                    <a href="#" class="text-base font-bold text-gray-900 hover:text-[#006AB4] uppercase">The Wars</a>
+                    <a href="#" class="text-base font-bold text-gray-900 hover:text-[#006AB4] uppercase">Playbooks</a>
+                    <button class="bg-[#FFC906] text-black border-2 border-black font-bold py-2 px-6 brutalist-shadow uppercase text-sm tracking-widest ml-4">
+                        Subscribe
+                    </button>
+                </div>
+                <button class="lg:hidden border-2 border-black p-2">
+                    <i class="ph-bold ph-list text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <slot />
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-[#1a1a1a] text-white pt-12 pb-12 border-t-4 border-[#E31C25] mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-4xl brand-font text-white mb-4">ACME Hub<span class="text-[#E31C25]">.</span></h2>
+            <div class="flex justify-center gap-8 mb-6 font-bold uppercase text-sm tracking-widest text-gray-400">
+                <a href="/" class="hover:text-white">Knowledge Hub</a>
+                <a href="#" class="hover:text-white">The Wars</a>
+                <a href="#" class="hover:text-white">Playbooks</a>
+            </div>
+            <p class="text-gray-500 font-bold text-sm">
+                &copy; 2025 ACME &mdash; All Cool Marketing Experiments. Built for practitioners.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>

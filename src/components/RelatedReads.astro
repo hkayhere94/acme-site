@@ -1,0 +1,33 @@
+---
+interface RelatedItem {
+  href: string;
+  type: string;
+  title: string;
+  color: string; // 'blue' | 'red' | 'black'
+}
+
+interface Props {
+  items: RelatedItem[];
+}
+
+const { items } = Astro.props;
+
+const colorMap: Record<string, { bg: string; text: string }> = {
+  blue:  { bg: 'bg-[#006AB4]', text: 'text-[#006AB4]' },
+  red:   { bg: 'bg-[#E31C25]', text: 'text-[#E31C25]' },
+  black: { bg: 'bg-black',     text: 'text-[#FFC906]' },
+};
+---
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    {items.map((item) => {
+        const c = colorMap[item.color] || colorMap.blue;
+        return (
+            <a href={item.href} class="bg-white border-4 border-black p-5 hover:translate-y-[-2px] hover:translate-x-[-2px] transition-all group relative">
+                <div class={`absolute inset-0 ${c.bg} translate-x-1.5 translate-y-1.5 border-2 border-black -z-10`}></div>
+                <span class={`text-[10px] font-black uppercase tracking-widest ${c.text}`}>{item.type}</span>
+                <p class="font-black uppercase text-sm leading-tight group-hover:text-[#E31C25] transition-colors">{item.title}</p>
+            </a>
+        );
+    })}
+</div>
