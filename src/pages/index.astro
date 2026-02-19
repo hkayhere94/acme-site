@@ -1,6 +1,49 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 import '../styles/global.css';
+
+// Fetch all content from both collections
+const articles = await getCollection('articles');
+const episodes = await getCollection('episodes');
+
+// Build a unified list of cards with a consistent shape
+const shadowColors = ['black', '#006AB4', 'black', '#E31C25', 'black', '#006AB4'];
+let colorIdx = 0;
+
+const allCards = [
+  ...articles.map((entry) => ({
+    type: 'article' as const,
+    contentType: entry.data.contentType || 'Case Study',
+    title: entry.data.title.replace(/<[^>]*>/g, ''),           // strip HTML spans for card
+    subtitle: entry.data.subtitle || '',
+    slug: entry.data.urlSlug,
+    tags: entry.data.tags || [],
+    takeaway: entry.data.takeaways?.[0]?.text || '',
+    seriesTag: entry.data.contentType || 'Case Study',
+  })),
+  ...episodes.map((entry) => ({
+    type: 'episode' as const,
+    contentType: 'Podcast',
+    title: entry.data.title.replace(/<[^>]*>/g, ''),
+    subtitle: entry.data.subtitle || '',
+    slug: entry.data.urlSlug,
+    tags: entry.data.tags || [],
+    takeaway: entry.data.takeaways?.[0]?.text || '',
+    seriesTag: entry.data.seriesTag || 'Episode',
+  })),
+];
+
+// Badge color map
+const badgeColors: Record<string, { bg: string; text: string }> = {
+  'Podcast':    { bg: '#E31C25', text: 'white' },
+  'Case Study': { bg: '#006AB4', text: 'white' },
+  'Article':    { bg: '#006AB4', text: 'white' },
+  'Playbook':   { bg: '#FFC906', text: 'black' },
+  'Research':   { bg: '#FFC906', text: 'black' },
+  'Book':       { bg: '#FFC906', text: 'black' },
+  'Video':      { bg: '#006AB4', text: 'white' },
+};
 ---
 
 <BaseLayout title="Knowledge Hub">
@@ -51,10 +94,10 @@ import '../styles/global.css';
                     <i class="ph-fill ph-microphone-stage text-[#E31C25]"></i> Podcast
                 </button>
                 <button class="filter-btn border-2 border-black px-4 py-1.5 font-bold uppercase text-[10px] bg-white hover:bg-gray-100 transition-all tracking-wider inline-flex items-center gap-1">
-                    <i class="ph-fill ph-book-open text-[#FFC906]"></i> Book
+                    <i class="ph-fill ph-article text-[#006AB4]"></i> Case Study
                 </button>
                 <button class="filter-btn border-2 border-black px-4 py-1.5 font-bold uppercase text-[10px] bg-white hover:bg-gray-100 transition-all tracking-wider inline-flex items-center gap-1">
-                    <i class="ph-fill ph-youtube-logo text-[#006AB4]"></i> Video
+                    <i class="ph-fill ph-book-open text-[#FFC906]"></i> Book
                 </button>
             </div>
         </div>
@@ -66,6 +109,7 @@ import '../styles/global.css';
                 <button class="theme-btn border-2 border-black px-4 py-1.5 font-bold uppercase text-[10px] bg-white hover:bg-gray-100 transition-all tracking-wider">Strategy</button>
                 <button class="theme-btn border-2 border-black px-4 py-1.5 font-bold uppercase text-[10px] bg-white hover:bg-gray-100 transition-all tracking-wider">GTM</button>
                 <button class="theme-btn border-2 border-black px-4 py-1.5 font-bold uppercase text-[10px] bg-white hover:bg-gray-100 transition-all tracking-wider">Brand</button>
+                <button class="theme-btn border-2 border-black px-4 py-1.5 font-bold uppercase text-[10px] bg-white hover:bg-gray-100 transition-all tracking-wider">ABM</button>
                 <button class="theme-btn border-2 border-black px-4 py-1.5 font-bold uppercase text-[10px] bg-white hover:bg-gray-100 transition-all tracking-wider">AI</button>
                 <button class="theme-btn border-2 border-black px-4 py-1.5 font-bold uppercase text-[10px] bg-white hover:bg-gray-100 transition-all tracking-wider">Content</button>
                 <button class="theme-btn border-2 border-black px-4 py-1.5 font-bold uppercase text-[10px] bg-white hover:bg-gray-100 transition-all tracking-wider">Growth</button>
@@ -75,141 +119,46 @@ import '../styles/global.css';
         <div class="mb-10"></div>
     </section>
 
-    <!-- ===== CONTENT GRID (MASONRY) ===== -->
+    <!-- ===== CONTENT GRID (MASONRY) — dynamically populated from CMS ===== -->
     <section class="pb-16 px-4 max-w-7xl mx-auto">
         <div class="masonry-grid">
 
-            <!-- Card 1: Podcast -->
-            <article class="group relative">
-                <div class="absolute inset-0 bg-black translate-x-2 translate-y-2 border-2 border-black"></div>
-                <a href="/hub/diary-of-a-ceo-mark-ritson" class="relative bg-white border-4 border-black p-6 flex flex-col hover:translate-y-[-2px] hover:translate-x-[-2px] transition-all block h-full">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="bg-[#E31C25] text-white text-xs font-black px-2 py-1 uppercase border-2 border-black">Podcast</span>
-                        <span class="text-gray-400 group-hover:text-black transition-colors"><i class="ph-bold ph-arrow-up-right text-xl"></i></span>
-                    </div>
-                    <h3 class="text-2xl brand-font uppercase leading-tight mb-3">The Diary of a CEO: Mark Ritson</h3>
-                    <p class="slab-text text-gray-700 mb-6">A deep dive into why brand differentiation is a myth and distinctiveness is the only thing that actually moves the needle.</p>
-                    <div class="bg-[#FFC906] p-4 border-2 border-black mb-4">
-                        <span class="block font-black text-xs uppercase mb-2">Key Takeaway:</span>
-                        <p class="font-bold text-sm italic">"Stop trying to be 'better'. Focus on being consistently recognizable at every touchpoint."</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 mt-auto">
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5">Strategy</span>
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5">Brand</span>
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5 bg-gray-100">Triggered Gyan</span>
-                    </div>
-                </a>
-            </article>
+            {allCards.map((card, i) => {
+                const shadow = shadowColors[i % shadowColors.length];
+                const badge = badgeColors[card.contentType] || { bg: 'black', text: 'white' };
+                return (
+                    <article class="group relative">
+                        <div class="absolute inset-0 translate-x-2 translate-y-2 border-2 border-black" style={`background:${shadow};`}></div>
+                        <a href={`/hub/${card.slug}`} class="relative bg-white border-4 border-black p-6 flex flex-col hover:translate-y-[-2px] hover:translate-x-[-2px] transition-all block h-full">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="text-xs font-black px-2 py-1 uppercase border-2 border-black" style={`background:${badge.bg};color:${badge.text};`}>{card.contentType}</span>
+                                <span class="text-gray-400 group-hover:text-black transition-colors"><i class="ph-bold ph-arrow-up-right text-xl"></i></span>
+                            </div>
+                            <h3 class="text-2xl brand-font uppercase leading-tight mb-3">{card.title}</h3>
+                            <p class="slab-text text-gray-700 mb-6">{card.subtitle}</p>
+                            {card.takeaway && (
+                                <div class="bg-[#FFC906] p-4 border-2 border-black mb-4">
+                                    <span class="block font-black text-xs uppercase mb-2">Key Takeaway:</span>
+                                    <p class="font-bold text-sm">{card.takeaway}</p>
+                                </div>
+                            )}
+                            <div class="flex flex-wrap gap-2 mt-auto">
+                                {card.tags.map((tag: string) => (
+                                    <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5">{tag}</span>
+                                ))}
+                                <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5 bg-gray-100">{card.seriesTag}</span>
+                            </div>
+                        </a>
+                    </article>
+                );
+            })}
 
-            <!-- Card 2: Book -->
-            <article class="group relative">
-                <div class="absolute inset-0 bg-[#006AB4] translate-x-2 translate-y-2 border-2 border-black"></div>
-                <a href="#" class="relative bg-white border-4 border-black p-6 flex flex-col hover:translate-y-[-2px] hover:translate-x-[-2px] transition-all block h-full">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="bg-[#FFC906] text-black text-xs font-black px-2 py-1 uppercase border-2 border-black">Book</span>
-                        <span class="text-gray-400 group-hover:text-black transition-colors"><i class="ph-bold ph-arrow-up-right text-xl"></i></span>
-                    </div>
-                    <h3 class="text-2xl brand-font uppercase leading-tight mb-3">How Brands Grow</h3>
-                    <p class="slab-text text-gray-700 mb-6">Byron Sharp's scientific approach to marketing. The data-driven evidence for mental and physical availability over loyalty programs.</p>
-                    <div class="bg-[#FFC906] p-4 border-3 border-black mb-4">
-                        <span class="block font-black text-xs uppercase mb-2">Key Takeaway:</span>
-                        <p class="font-bold text-sm">Retention is a fool's errand. Target light buyers to achieve significant market share growth.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 mt-auto">
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5">Growth</span>
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5">Strategy</span>
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5 bg-gray-100">First Principles</span>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Card 3: Video -->
-            <article class="group relative">
-                <div class="absolute inset-0 bg-black translate-x-2 translate-y-2 border-2 border-black"></div>
-                <a href="#" class="relative bg-white border-4 border-black p-6 flex flex-col hover:translate-y-[-2px] hover:translate-x-[-2px] transition-all block h-full">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="bg-[#006AB4] text-white text-xs font-black px-2 py-1 uppercase border-2 border-black">Video</span>
-                        <span class="text-gray-400 group-hover:text-black transition-colors"><i class="ph-bold ph-arrow-up-right text-xl"></i></span>
-                    </div>
-                    <h3 class="text-2xl brand-font uppercase leading-tight mb-3">The Death of Performance Marketing</h3>
-                    <p class="slab-text text-gray-700 mb-6">Analysis of Airbnb's shift from performance-led to brand-led growth and why the PPC trap is killing modern startups.</p>
-                    <div class="bg-[#FFC906] p-4 border-2 border-black mb-4">
-                        <span class="block font-black text-xs uppercase mb-2">Key Takeaway:</span>
-                        <p class="font-bold text-sm">Efficiency is not effectiveness. Performance is for harvest, brand is for irrigation.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 mt-auto">
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5">GTM</span>
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5">Brand</span>
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5 bg-gray-100">Trad Meets Trend</span>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Card 4: Podcast -->
-            <article class="group relative">
-                <div class="absolute inset-0 bg-black translate-x-2 translate-y-2 border-2 border-black"></div>
-                <a href="#" class="relative bg-white border-4 border-black p-6 flex flex-col hover:translate-y-[-2px] hover:translate-x-[-2px] transition-all block h-full">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="bg-[#E31C25] text-white text-xs font-black px-2 py-1 uppercase border-2 border-black">Podcast</span>
-                        <span class="text-gray-400 group-hover:text-black transition-colors"><i class="ph-bold ph-arrow-up-right text-xl"></i></span>
-                    </div>
-                    <h3 class="text-2xl brand-font uppercase leading-tight mb-3">Marketing Over Coffee: AI Trends</h3>
-                    <p class="slab-text text-gray-700 mb-6">A look at LLMs in creative production. Why 80% of what's produced is garbage and how to be in the 20%.</p>
-                    <div class="bg-[#FFC906] p-4 border-2 border-black mb-4">
-                        <span class="block font-black text-xs uppercase mb-2">Key Takeaway:</span>
-                        <p class="font-bold text-sm italic">"Use AI for the 'rough' and human taste for the 'diamond'. Don't let the machine ship the final file."</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 mt-auto">
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5">AI</span>
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5">Content</span>
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5 bg-gray-100">Triggered Gyan</span>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Card 5: Book -->
-            <article class="group relative">
-                <div class="absolute inset-0 bg-black translate-x-2 translate-y-2 border-2 border-black"></div>
-                <a href="#" class="relative bg-white border-4 border-black p-6 flex flex-col hover:translate-y-[-2px] hover:translate-x-[-2px] transition-all block h-full">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="bg-[#FFC906] text-black text-xs font-black px-2 py-1 uppercase border-2 border-black">Book</span>
-                        <span class="text-gray-400 group-hover:text-black transition-colors"><i class="ph-bold ph-arrow-up-right text-xl"></i></span>
-                    </div>
-                    <h3 class="text-2xl brand-font uppercase leading-tight mb-3">Scientific Advertising</h3>
-                    <p class="slab-text text-gray-700 mb-6">Claude Hopkins' 1923 classic. Why the fundamentals of human psychology haven't changed in 100 years.</p>
-                    <div class="bg-[#FFC906] p-4 border-2 border-black mb-4">
-                        <span class="block font-black text-xs uppercase mb-2">Key Takeaway:</span>
-                        <p class="font-bold text-sm">Advertising is salesmanship in print. It is not to please or amuse, it is to sell.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 mt-auto">
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5">Strategy</span>
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5">Content</span>
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5 bg-gray-100">First Principles</span>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Card 6: Video -->
-            <article class="group relative">
-                <div class="absolute inset-0 bg-black translate-x-2 translate-y-2 border-2 border-black"></div>
-                <a href="#" class="relative bg-white border-4 border-black p-6 flex flex-col hover:translate-y-[-2px] hover:translate-x-[-2px] transition-all block h-full">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="bg-[#006AB4] text-white text-xs font-black px-2 py-1 uppercase border-2 border-black">Video</span>
-                        <span class="text-gray-400 group-hover:text-black transition-colors"><i class="ph-bold ph-arrow-up-right text-xl"></i></span>
-                    </div>
-                    <h3 class="text-2xl brand-font uppercase leading-tight mb-3">B2B Is Not Boring: LinkedIn Strategy</h3>
-                    <p class="slab-text text-gray-700 mb-6">Why B2B marketers are the worst copycats and how the best ones steal from consumer brands without shame.</p>
-                    <div class="bg-[#FFC906] p-4 border-2 border-black mb-4">
-                        <span class="block font-black text-xs uppercase mb-2">Key Takeaway:</span>
-                        <p class="font-bold text-sm">B2B buyers are still humans. Emotional resonance beats feature lists every single time.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 mt-auto">
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5">GTM</span>
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5">Brand</span>
-                        <span class="text-[10px] font-black uppercase border border-black px-2 py-0.5 bg-gray-100">Trad Meets Trend</span>
-                    </div>
-                </a>
-            </article>
+            {allCards.length === 0 && (
+                <div class="col-span-full text-center py-20">
+                    <p class="text-2xl brand-font uppercase text-gray-400 mb-4">No content yet</p>
+                    <p class="slab-text text-gray-500">Add articles or episodes via the <a href="/admin" class="text-[#E31C25] underline font-bold">CMS admin</a> to see them here.</p>
+                </div>
+            )}
 
         </div>
     </section>
