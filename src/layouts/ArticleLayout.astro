@@ -1,0 +1,311 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ProgressBar from '../components/ProgressBar.astro';
+import TldrCard from '../components/TldrCard.astro';
+import RelatedReads from '../components/RelatedReads.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  publishDate?: string;
+  readTime?: string;
+  contentType?: string;
+  heroImage?: string;
+  tags?: string[];
+  bestFor?: string[];
+  subject?: { name: string; description?: string; };
+  featuring?: { name: string; title?: string; initials?: string; avatarColor?: string; }[];
+  takeaways?: { label: string; text: string; }[];
+  tocSections?: { id: string; label: string; }[];
+  references?: string[];
+  relatedReads?: { title: string; type?: string; href?: string; color?: string; }[];
+  prevPost?: { title: string; href?: string; };
+  nextPost?: { title: string; href?: string; };
+}
+
+const {
+  title,
+  subtitle,
+  publishDate,
+  readTime,
+  contentType,
+  heroImage,
+  tags = [],
+  bestFor = [],
+  subject,
+  featuring = [],
+  takeaways = [],
+  tocSections = [],
+  references = [],
+  relatedReads = [],
+  prevPost,
+  nextPost,
+} = Astro.props;
+
+// Icon rotation for bestFor pills
+const bestForIcons = [
+  'ph-bold ph-target',
+  'ph-bold ph-chart-line-up',
+  'ph-bold ph-rocket-launch',
+  'ph-bold ph-handshake',
+];
+
+const bestForColors = [
+  'text-[#006AB4]',
+  'text-[#E31C25]',
+  'text-[#FFC906]',
+  'text-white',
+];
+---
+
+<BaseLayout title={title}>
+
+    <!-- Reading progress bar -->
+    <ProgressBar />
+
+
+    <!-- ===== FULL-WIDTH HERO HEADER ===== -->
+    <header class="pt-28 pb-0 px-4 max-w-7xl mx-auto">
+        <a href="/" class="inline-flex items-center font-black uppercase tracking-widest text-sm hover:text-[#E31C25] mb-6 transition-colors">
+            <i class="ph-bold ph-arrow-left mr-2"></i> Back to Hub
+        </a>
+
+        <div class="bg-[#1a1a1a] border-4 border-black p-8 md:p-12 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-[#E31C25] opacity-5 rotate-45 translate-x-20 -translate-y-20"></div>
+
+            <div class="relative z-10">
+                <!-- Meta badges -->
+                <div class="flex flex-wrap items-center gap-2 mb-5">
+                    {contentType && (
+                        <span class="bg-[#006AB4] text-white px-3 py-1 text-xs font-black uppercase tracking-widest border-2 border-white/20 inline-flex items-center gap-1">
+                            <i class="ph-fill ph-article"></i> {contentType}
+                        </span>
+                    )}
+                    {readTime && (
+                        <span class="bg-white/10 text-white px-3 py-1 text-xs font-black uppercase tracking-widest border-2 border-white/20 inline-flex items-center gap-1">
+                            <i class="ph-bold ph-clock"></i> {readTime}
+                        </span>
+                    )}
+                    {publishDate && (
+                        <span class="bg-white/10 text-white px-3 py-1 text-xs font-black uppercase tracking-widest border-2 border-white/20">
+                            {publishDate}
+                        </span>
+                    )}
+                </div>
+
+                <!-- Title -->
+                <h1 class="text-4xl md:text-5xl lg:text-6xl brand-font text-white uppercase tracking-tighter leading-[0.9] mb-4 max-w-4xl" set:html={title} />
+
+                <!-- Subtitle -->
+                {subtitle && (
+                    <p class="slab-text text-lg text-gray-300 leading-relaxed mb-5 max-w-3xl">
+                        {subtitle}
+                    </p>
+                )}
+
+                <!-- Tags -->
+                {tags.length > 0 && (
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        {tags.map((tag) => (
+                            <span class="text-[10px] font-black uppercase border border-white/30 text-white/70 px-2 py-0.5">{tag}</span>
+                        ))}
+                    </div>
+                )}
+
+                <!-- Best for -->
+                {bestFor.length > 0 && (
+                    <div class="flex flex-wrap items-center gap-2 mb-8">
+                        <span class="font-black text-[10px] uppercase tracking-widest text-gray-500">Best for:</span>
+                        {bestFor.map((item, i) => (
+                            <span class="border border-white/20 text-white/80 px-3 py-1 font-black uppercase text-[10px] tracking-wide inline-flex items-center gap-1">
+                                <i class={`${bestForIcons[i % bestForIcons.length]} ${bestForColors[i % bestForColors.length]} text-xs`}></i> {item}
+                            </span>
+                        ))}
+                    </div>
+                )}
+
+                <!-- Hero Image -->
+                {heroImage && (
+                    <div class="hero-image bg-black">
+                        <img src={heroImage} alt={title.replace(/<[^>]*>/g, '')} class="w-full block">
+                    </div>
+                )}
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ===== CONTENT AREA: TOC Sidebar + Article ===== -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
+        <div class="grid grid-cols-12 gap-8 lg:gap-12">
+
+            <!-- ===== LEFT: Sticky TOC + Meta ===== -->
+            <aside class="hidden lg:block col-span-3">
+                <div class="sticky-toc space-y-6">
+
+                    <!-- On This Page -->
+                    {tocSections.length > 0 && (
+                        <div>
+                            <h3 class="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-3">On This Page</h3>
+                            <ul class="space-y-1">
+                                {tocSections.map((section) => (
+                                    <li><a href={`#${section.id}`} class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">{section.label}</a></li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
+                    {subject && (
+                        <div class="border-t-2 border-gray-200 pt-6">
+                            <!-- Subject -->
+                            <h3 class="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-2">Subject</h3>
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 bg-[#006AB4] border-2 border-black overflow-hidden flex-shrink-0">
+                                    <img src={`https://api.dicebear.com/7.x/identicon/svg?seed=${subject.name}`} alt={subject.name} class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h4 class="font-black text-sm leading-tight">{subject.name}</h4>
+                                </div>
+                            </div>
+                            {subject.description && (
+                                <p class="slab-text text-xs text-gray-400 italic">{subject.description}</p>
+                            )}
+                        </div>
+                    )}
+
+                    {featuring.length > 0 && (
+                        <div class="border-t-2 border-gray-200 pt-6">
+                            <!-- Key People -->
+                            <h3 class="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-2">Featuring</h3>
+                            <div class="space-y-2">
+                                {featuring.map((person) => (
+                                    <div class="flex items-center gap-2">
+                                        <div class={`w-7 h-7 ${person.avatarColor || 'bg-gray-200'} border-2 border-black overflow-hidden flex-shrink-0 flex items-center justify-center`}>
+                                            <span class="font-black text-[8px]">{person.initials || ''}</span>
+                                        </div>
+                                        <div>
+                                            <p class="font-black text-xs leading-tight">{person.name}</p>
+                                            {person.title && <p class="text-[9px] text-gray-400">{person.title}</p>}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    <div class="border-t-2 border-gray-200 pt-6">
+                        <!-- Curated By -->
+                        <h3 class="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-2">Curated By</h3>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 bg-[#E31C25] border-2 border-black overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                <span class="text-white font-black text-sm">HK</span>
+                            </div>
+                            <div>
+                                <h4 class="font-black text-sm leading-tight">Hari Krishnan</h4>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase">ACME, Founder</p>
+                            </div>
+                        </div>
+                        <p class="slab-text text-xs text-gray-400 italic">Practitioner-filtered. Every insight validated against real GTM execution.</p>
+                    </div>
+
+                    <div class="border-t-2 border-gray-200 pt-6">
+                        <!-- Actions -->
+                        <button class="w-full bg-[#1a1a1a] text-white border-2 border-black p-3 font-black uppercase text-[10px] tracking-widest hover:bg-[#E31C25] transition-colors flex items-center justify-center gap-2 mb-2">
+                            <i class="ph-bold ph-bookmark-simple"></i> Save to Reading List
+                        </button>
+                        <button class="w-full bg-white text-black border-2 border-black p-3 font-black uppercase text-[10px] tracking-widest hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
+                            <i class="ph-bold ph-share-network"></i> Share
+                        </button>
+                    </div>
+
+                </div>
+            </aside>
+
+
+            <!-- ===== RIGHT: Main Article Content ===== -->
+            <main class="col-span-12 lg:col-span-9">
+
+                <!-- TL;DR -->
+                {takeaways.length > 0 && (
+                    <section class="mb-14" id="tldr">
+                        <TldrCard items={takeaways} />
+                    </section>
+                )}
+
+
+                <!-- ===== ARTICLE BODY (MDX slot) ===== -->
+                <slot />
+
+
+                <!-- ===== REFERENCES ===== -->
+                {references.length > 0 && (
+                    <section class="mb-14" id="references">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="bg-black text-white font-black text-xs w-8 h-8 flex items-center justify-center flex-shrink-0">
+                                <i class="ph-bold ph-books"></i>
+                            </span>
+                            <h2 class="text-2xl brand-font uppercase">References</h2>
+                        </div>
+                        <div class="bg-white border-4 border-black p-6">
+                            <ol class="reference-list">
+                                {references.map((ref) => (
+                                    <li><span class="slab-text text-gray-600" set:html={ref} /></li>
+                                ))}
+                            </ol>
+                        </div>
+                    </section>
+                )}
+
+
+                <!-- ===== RELATED READS ===== -->
+                {relatedReads.length > 0 && (
+                    <section class="mb-14" id="related">
+                        <h2 class="text-3xl brand-font uppercase mb-8 flex items-center">
+                            Related Reads
+                        </h2>
+                        <RelatedReads items={relatedReads.map((item) => ({
+                            href: item.href || '#',
+                            type: item.type || '',
+                            title: item.title,
+                            color: item.color || 'blue',
+                        }))} />
+                    </section>
+                )}
+
+
+                <!-- ===== PREV / NEXT NAV ===== -->
+                {(prevPost || nextPost) && (
+                    <section class="mb-12">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {prevPost ? (
+                                <a href={prevPost.href || '#'} class="bg-white border-4 border-black p-5 hover:bg-gray-50 transition-colors group flex items-center gap-4">
+                                    <i class="ph-bold ph-arrow-left text-xl text-gray-400 group-hover:text-[#E31C25] transition-colors"></i>
+                                    <div>
+                                        <span class="font-black text-[10px] uppercase tracking-widest text-gray-400">Previous</span>
+                                        <p class="font-bold uppercase text-sm leading-tight">{prevPost.title}</p>
+                                    </div>
+                                </a>
+                            ) : (
+                                <div></div>
+                            )}
+                            {nextPost ? (
+                                <a href={nextPost.href || '#'} class="bg-white border-4 border-black p-5 hover:bg-gray-50 transition-colors group flex items-center gap-4 text-right md:justify-end">
+                                    <div>
+                                        <span class="font-black text-[10px] uppercase tracking-widest text-gray-400">Next</span>
+                                        <p class="font-bold uppercase text-sm leading-tight">{nextPost.title}</p>
+                                    </div>
+                                    <i class="ph-bold ph-arrow-right text-xl text-gray-400 group-hover:text-[#E31C25] transition-colors"></i>
+                                </a>
+                            ) : (
+                                <div></div>
+                            )}
+                        </div>
+                    </section>
+                )}
+
+            </main>
+        </div>
+    </div>
+
+</BaseLayout>

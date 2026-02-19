@@ -1,5 +1,17 @@
 import { defineCollection, z } from 'astro:content';
 
+const relatedReadSchema = z.object({
+  title: z.string(),
+  type: z.string().optional(),
+  href: z.string().optional(),
+  color: z.string().optional(),
+});
+
+const postNavSchema = z.object({
+  title: z.string(),
+  href: z.string().optional(),
+});
+
 const articles = defineCollection({
   type: 'content',
   schema: z.object({
@@ -26,7 +38,14 @@ const articles = defineCollection({
       label: z.string(),
       text: z.string(),
     })).optional(),
+    tocSections: z.array(z.object({
+      id: z.string(),
+      label: z.string(),
+    })).optional(),
     references: z.array(z.string()).optional(),
+    relatedReads: z.array(relatedReadSchema).optional(),
+    prevPost: postNavSchema.optional(),
+    nextPost: postNavSchema.optional(),
   }),
 });
 
@@ -39,6 +58,8 @@ const episodes = defineCollection({
     episodeNumber: z.string().optional(),
     seriesTag: z.string().optional(),
     youtubeUrl: z.string().optional(),
+    spotifyUrl: z.string().optional(),
+    applePodcastsUrl: z.string().optional(),
     tags: z.array(z.string()).optional(),
     bestFor: z.array(z.string()).optional(),
     source: z.object({
@@ -50,6 +71,7 @@ const episodes = defineCollection({
       name: z.string(),
       title: z.string().optional(),
       initials: z.string().optional(),
+      avatarColor: z.string().optional(),
     }).optional(),
     takeaways: z.array(z.object({
       label: z.string(),
@@ -59,6 +81,9 @@ const episodes = defineCollection({
       timestamp: z.string(),
       quote: z.string(),
     })).optional(),
+    relatedReads: z.array(relatedReadSchema).optional(),
+    prevPost: postNavSchema.optional(),
+    nextPost: postNavSchema.optional(),
   }),
 });
 

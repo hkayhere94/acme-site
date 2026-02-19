@@ -1,0 +1,319 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ProgressBar from '../components/ProgressBar.astro';
+import TldrCard from '../components/TldrCard.astro';
+import RelatedReads from '../components/RelatedReads.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  episodeNumber?: string;
+  seriesTag?: string;
+  youtubeUrl?: string;
+  spotifyUrl?: string;
+  applePodcastsUrl?: string;
+  tags?: string[];
+  bestFor?: string[];
+  source?: { name: string; host?: string; description?: string; };
+  featuring?: { name: string; title?: string; initials?: string; avatarColor?: string; };
+  takeaways?: { label: string; text: string; }[];
+  keyQuotes?: { timestamp: string; quote: string; }[];
+  relatedReads?: { title: string; type?: string; href?: string; color?: string; }[];
+  prevPost?: { title: string; href?: string; };
+  nextPost?: { title: string; href?: string; };
+}
+
+const {
+  title,
+  subtitle,
+  episodeNumber,
+  seriesTag,
+  youtubeUrl,
+  spotifyUrl,
+  applePodcastsUrl,
+  tags = [],
+  bestFor = [],
+  source,
+  featuring,
+  takeaways = [],
+  keyQuotes = [],
+  relatedReads = [],
+  prevPost,
+  nextPost,
+} = Astro.props;
+
+// Icon rotation for bestFor pills
+const bestForIcons = [
+  'ph-bold ph-chart-line-up',
+  'ph-bold ph-target',
+  'ph-bold ph-rocket-launch',
+  'ph-bold ph-gear-six',
+];
+
+const bestForColors = [
+  'text-[#E31C25]',
+  'text-[#006AB4]',
+  'text-[#FFC906]',
+  'text-white',
+];
+---
+
+<BaseLayout title={title}>
+
+    <ProgressBar />
+
+    <!-- ===== FULL-WIDTH HERO HEADER ===== -->
+    <header class="pt-28 pb-0 px-4 max-w-7xl mx-auto">
+        <a href="/" class="inline-flex items-center font-black uppercase tracking-widest text-sm hover:text-[#E31C25] mb-6 transition-colors">
+            <i class="ph-bold ph-arrow-left mr-2"></i> Back to Hub
+        </a>
+
+        <div class="bg-[#1a1a1a] border-4 border-black p-8 md:p-12 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-[#E31C25] opacity-5 rotate-45 translate-x-20 -translate-y-20"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
+                <!-- Left: Meta + Title -->
+                <div class={youtubeUrl ? 'lg:col-span-2' : 'lg:col-span-3'}>
+                    <div class="flex flex-wrap items-center gap-2 mb-4">
+                        <span class="bg-[#E31C25] text-white px-3 py-1 text-xs font-black uppercase tracking-widest border-2 border-white/20 inline-flex items-center gap-1">
+                            <i class="ph-fill ph-microphone-stage"></i> Podcast
+                        </span>
+                        {episodeNumber && (
+                            <span class="bg-[#006AB4] text-white px-3 py-1 text-xs font-black uppercase tracking-widest border-2 border-white/20">Episode #{episodeNumber}</span>
+                        )}
+                        {seriesTag && (
+                            <span class="bg-white/10 text-white px-3 py-1 text-xs font-black uppercase tracking-widest border-2 border-white/20">{seriesTag}</span>
+                        )}
+                    </div>
+
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl brand-font text-white uppercase tracking-tighter leading-[0.9] mb-4" set:html={title} />
+
+                    {subtitle && (
+                        <p class="slab-text text-lg text-gray-300 leading-relaxed mb-5 max-w-2xl">
+                            {subtitle}
+                        </p>
+                    )}
+
+                    {tags.length > 0 && (
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            {tags.map((tag) => (
+                                <span class="text-[10px] font-black uppercase border border-white/30 text-white/70 px-2 py-0.5">{tag}</span>
+                            ))}
+                        </div>
+                    )}
+
+                    {bestFor.length > 0 && (
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="font-black text-[10px] uppercase tracking-widest text-gray-500">Best for:</span>
+                            {bestFor.map((item, i) => (
+                                <span class="border border-white/20 text-white/80 px-3 py-1 font-black uppercase text-[10px] tracking-wide inline-flex items-center gap-1">
+                                    <i class={`${bestForIcons[i % bestForIcons.length]} ${bestForColors[i % bestForColors.length]} text-xs`}></i> {item}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                <!-- Right: YouTube Embed (conditional) -->
+                {youtubeUrl && (
+                    <div class="lg:col-span-1 flex items-end">
+                        <div class="w-full border-4 border-white/20 bg-black">
+                            <div class="relative w-full" style="padding-bottom: 56.25%;">
+                                <iframe
+                                    class="absolute inset-0 w-full h-full"
+                                    src={youtubeUrl}
+                                    title={title.replace(/<[^>]*>/g, '')}
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="px-3 py-2 flex items-center justify-between">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-gray-500">Watch full episode</span>
+                                <div class="flex gap-2">
+                                    {spotifyUrl && (
+                                        <a href={spotifyUrl} class="text-gray-500 hover:text-[#1DB954] transition-colors" title="Spotify"><i class="ph-fill ph-spotify-logo text-base"></i></a>
+                                    )}
+                                    {applePodcastsUrl && (
+                                        <a href={applePodcastsUrl} class="text-gray-500 hover:text-[#872EC4] transition-colors" title="Apple Podcasts"><i class="ph-fill ph-apple-podcasts-logo text-base"></i></a>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ===== CONTENT AREA: TOC Sidebar + Article ===== -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
+        <div class="grid grid-cols-12 gap-8 lg:gap-12">
+
+            <!-- ===== LEFT: Sticky TOC + Guest + Related ===== -->
+            <aside class="hidden lg:block col-span-3">
+                <div class="sticky-toc space-y-6">
+
+                    <!-- On This Page -->
+                    <div>
+                        <h3 class="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-3">On This Page</h3>
+                        <ul class="space-y-1">
+                            <li><a href="#tldr" class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">Key Takeaways</a></li>
+                            <li><a href="#analysis" class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">Deep Analysis</a></li>
+                            <li><a href="#quotes" class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">Key Quotes</a></li>
+                            <li><a href="#related" class="toc-link block pl-3 border-l-2 border-gray-200 py-1 font-bold text-sm uppercase tracking-wide hover:text-[#E31C25] hover:border-[#E31C25] transition-colors">Related</a></li>
+                        </ul>
+                    </div>
+
+                    {source && (
+                        <div class="border-t-2 border-gray-200 pt-6">
+                            <!-- Source -->
+                            <h3 class="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-2">Source</h3>
+                            <p class="font-black text-sm leading-tight mb-1">{source.name}</p>
+                            {source.host && (
+                                <p class="slab-text text-xs text-gray-500 leading-relaxed mb-1">Hosted by {source.host}</p>
+                            )}
+                            {source.description && (
+                                <p class="slab-text text-xs text-gray-400 italic">{source.description}</p>
+                            )}
+                        </div>
+                    )}
+
+                    {featuring && (
+                        <div class="border-t-2 border-gray-200 pt-6">
+                            <!-- Featuring -->
+                            <h3 class="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-2">Featuring</h3>
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class={`w-10 h-10 ${featuring.avatarColor || 'bg-[#006AB4]'} border-2 border-black overflow-hidden flex-shrink-0`}>
+                                    <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${featuring.name}`} alt={featuring.name} class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h4 class="font-black text-sm leading-tight">{featuring.name}</h4>
+                                    {featuring.title && (
+                                        <p class="text-[10px] font-bold text-gray-400 uppercase">{featuring.title}</p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <div class="border-t-2 border-gray-200 pt-6">
+                        <!-- Curated By -->
+                        <h3 class="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-2">Curated By</h3>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 bg-[#E31C25] border-2 border-black overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                <span class="text-white font-black text-sm">HK</span>
+                            </div>
+                            <div>
+                                <h4 class="font-black text-sm leading-tight">Hari Krishnan</h4>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase">ACME, Founder</p>
+                            </div>
+                        </div>
+                        <p class="slab-text text-xs text-gray-400 italic">Practitioner-filtered. Every insight validated against real GTM execution.</p>
+                    </div>
+
+                    <div class="border-t-2 border-gray-200 pt-6">
+                        <!-- Actions -->
+                        <button class="w-full bg-[#1a1a1a] text-white border-2 border-black p-3 font-black uppercase text-[10px] tracking-widest hover:bg-[#E31C25] transition-colors flex items-center justify-center gap-2 mb-2">
+                            <i class="ph-bold ph-bookmark-simple"></i> Save to Reading List
+                        </button>
+                        <button class="w-full bg-white text-black border-2 border-black p-3 font-black uppercase text-[10px] tracking-widest hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
+                            <i class="ph-bold ph-share-network"></i> Share
+                        </button>
+                    </div>
+
+                </div>
+            </aside>
+
+
+            <!-- ===== RIGHT: Main Article Content ===== -->
+            <main class="col-span-12 lg:col-span-9">
+
+                <!-- TL;DR -->
+                {takeaways.length > 0 && (
+                    <section class="mb-14" id="tldr">
+                        <TldrCard items={takeaways} />
+                    </section>
+                )}
+
+
+                <!-- ===== DEEP ANALYSIS (Slot for body content) ===== -->
+                <section class="mb-14" id="analysis">
+                    <SectionHeader number="01" title="Deep Analysis" />
+
+                    <article class="article-prose space-y-8">
+                        <slot />
+                    </article>
+                </section>
+
+
+                <!-- ===== KEY QUOTES ===== -->
+                {keyQuotes.length > 0 && (
+                    <section class="mb-14" id="quotes">
+                        <SectionHeader number="02" title="Key Quotes" />
+                        <div class="space-y-4">
+                            {keyQuotes.map((item) => (
+                                <div class="bg-[#1a1a1a] text-white p-5 border-4 border-black flex gap-4 md:gap-6">
+                                    <div class="flex-shrink-0 text-[#FFC906] font-black w-12 text-sm pt-1">{item.timestamp}</div>
+                                    <p class="slab-text italic text-base leading-relaxed">
+                                        "{item.quote}"
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+
+                <!-- ===== RELATED READS ===== -->
+                {relatedReads.length > 0 && (
+                    <section class="mb-14" id="related">
+                        <SectionHeader number="03" title="Related Reads" />
+                        <RelatedReads items={relatedReads.map((item) => ({
+                            href: item.href || '#',
+                            type: item.type || '',
+                            title: item.title,
+                            color: item.color || 'blue',
+                        }))} />
+                    </section>
+                )}
+
+
+                <!-- ===== PREV / NEXT NAV ===== -->
+                {(prevPost || nextPost) && (
+                    <section class="mb-12">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {prevPost ? (
+                                <a href={prevPost.href || '#'} class="bg-white border-4 border-black p-5 hover:bg-gray-50 transition-colors group flex items-center gap-4">
+                                    <i class="ph-bold ph-arrow-left text-xl text-gray-400 group-hover:text-[#E31C25] transition-colors"></i>
+                                    <div>
+                                        <span class="font-black text-[10px] uppercase tracking-widest text-gray-400">Previous</span>
+                                        <p class="font-bold uppercase text-sm leading-tight">{prevPost.title}</p>
+                                    </div>
+                                </a>
+                            ) : (
+                                <div></div>
+                            )}
+                            {nextPost ? (
+                                <a href={nextPost.href || '#'} class="bg-white border-4 border-black p-5 hover:bg-gray-50 transition-colors group flex items-center gap-4 text-right md:justify-end">
+                                    <div>
+                                        <span class="font-black text-[10px] uppercase tracking-widest text-gray-400">Next</span>
+                                        <p class="font-bold uppercase text-sm leading-tight">{nextPost.title}</p>
+                                    </div>
+                                    <i class="ph-bold ph-arrow-right text-xl text-gray-400 group-hover:text-[#E31C25] transition-colors"></i>
+                                </a>
+                            ) : (
+                                <div></div>
+                            )}
+                        </div>
+                    </section>
+                )}
+
+            </main>
+        </div>
+    </div>
+
+</BaseLayout>

@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import EpisodeLayout from '../../layouts/EpisodeLayout.astro';
+
+// Generate static paths for all content
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  const episodes = await getCollection('episodes');
+
+  const articlePaths = articles.map((entry) => ({
+    params: { slug: entry.data.urlSlug },
+    props: { entry, type: 'article' as const },
+  }));
+
+  const episodePaths = episodes.map((entry) => ({
+    params: { slug: entry.data.urlSlug },
+    props: { entry, type: 'episode' as const },
+  }));
+
+  return [...articlePaths, ...episodePaths];
+}
+
+const { entry, type } = Astro.props;
+const { Content } = await entry.render();
+---
+
+{type === 'article' ? (
+  <ArticleLayout
+    title={entry.data.title}
+    subtitle={entry.data.subtitle}
+    publishDate={entry.data.publishDate}
+    readTime={entry.data.readTime}
+    contentType={entry.data.contentType}
+    heroImage={entry.data.heroImage}
+    tags={entry.data.tags}
+    bestFor={entry.data.bestFor}
+    subject={entry.data.subject}
+    featuring={entry.data.featuring}
+    takeaways={entry.data.takeaways}
+    tocSections={entry.data.tocSections}
+    references={entry.data.references}
+    relatedReads={entry.data.relatedReads}
+    prevPost={entry.data.prevPost}
+    nextPost={entry.data.nextPost}
+  >
+    <Content />
+  </ArticleLayout>
+) : (
+  <EpisodeLayout
+    title={entry.data.title}
+    subtitle={entry.data.subtitle}
+    episodeNumber={entry.data.episodeNumber}
+    seriesTag={entry.data.seriesTag}
+    youtubeUrl={entry.data.youtubeUrl}
+    spotifyUrl={entry.data.spotifyUrl}
+    applePodcastsUrl={entry.data.applePodcastsUrl}
+    tags={entry.data.tags}
+    bestFor={entry.data.bestFor}
+    source={entry.data.source}
+    featuring={entry.data.featuring}
+    takeaways={entry.data.takeaways}
+    keyQuotes={entry.data.keyQuotes}
+    relatedReads={entry.data.relatedReads}
+    prevPost={entry.data.prevPost}
+    nextPost={entry.data.nextPost}
+  >
+    <Content />
+  </EpisodeLayout>
+)}
