@@ -18,7 +18,9 @@ const articles = defineCollection({
     title: z.string(),
     subtitle: z.string().optional(),
     urlSlug: z.string(),
-    publishDate: z.string().optional(),
+    publishDate: z.union([z.string(), z.date()]).optional().transform((val) =>
+      val instanceof Date ? val.toISOString().split('T')[0] : val
+    ),
     readTime: z.string().optional(),
     heroImage: z.string().optional(),
     contentType: z.string().optional(),
