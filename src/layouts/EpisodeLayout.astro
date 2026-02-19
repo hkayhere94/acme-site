@@ -11,6 +11,7 @@ interface Props {
   subtitle?: string;
   episodeNumber?: string;
   seriesTag?: string;
+  heroImage?: string;
   youtubeUrl?: string;
   spotifyUrl?: string;
   applePodcastsUrl?: string;
@@ -30,6 +31,7 @@ const {
   subtitle,
   episodeNumber,
   seriesTag,
+  heroImage,
   youtubeUrl,
   spotifyUrl,
   applePodcastsUrl,
@@ -112,6 +114,13 @@ const bestForColors = [
                                     <i class={`${bestForIcons[i % bestForIcons.length]} ${bestForColors[i % bestForColors.length]} text-xs`}></i> {item}
                                 </span>
                             ))}
+                        </div>
+                    )}
+
+                    <!-- Hero Image -->
+                    {heroImage && !youtubeUrl && (
+                        <div class="mt-6 bg-black">
+                            <img src={heroImage} alt={title.replace(/<[^>]*>/g, '')} class="w-full block">
                         </div>
                     )}
                 </div>

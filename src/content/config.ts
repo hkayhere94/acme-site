@@ -57,6 +57,7 @@ const episodes = defineCollection({
     title: z.string(),
     subtitle: z.string().optional(),
     urlSlug: z.string(),
+    heroImage: z.string().optional(),
     episodeNumber: z.string().optional(),
     seriesTag: z.string().optional(),
     youtubeUrl: z.string().optional(),
