@@ -3,15 +3,18 @@ interface Props {
   src: string;
   alt: string;
   caption: string;
-  icon?: string; // phosphor icon name e.g. 'ph-bold ph-image'
+  icon?: string; // phosphor icon name e.g. 'ph-bold ph-chart-bar'
 }
 
 const { src, alt, caption, icon = 'ph-bold ph-image' } = Astro.props;
 ---
 
 <figure class="article-figure brutalist-card-shadow">
-    <img src={src} alt={alt}>
+    <div class="article-figure__image-wrap">
+        <img src={src} alt={alt} loading="lazy" />
+    </div>
     <figcaption>
-        <i class={`${icon} mr-1`}></i> {caption}
+        <i class={icon}></i>
+        <span>{caption}</span>
     </figcaption>
 </figure>
